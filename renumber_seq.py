@@ -111,15 +111,20 @@ def renumber_files(path, start, length):
         length (int): padding size used.
 
     """
-    # Check if the path exists and if it is a directory.
-    if not os.path.exists(path) and not os.path.isdir(path):
-        print('Path "%s" does not exist. Skipping path...'%path)
+    # Check if the path exists.
+    if not os.path.exists(path):
+        logger.warning('Path "%s" does not exist. Skipping path...'%path)
+        return
+
+    # Check if the path is a directory.
+    if not os.path.isdir(path):
+        logger.warning('Path "%s" is not a directory. Skipping path...'%path)
         return
 
     files = os.listdir(path)
     # Check if the directory is empty.
     if not files:
-        print('Path "%s" is empty. Skipping path...'%path)
+        logger.warning('Path "%s" is empty. Skipping path...'%path)
         return
 
     # renaming_dict: Dict to keep the relation between the original name and the current one
